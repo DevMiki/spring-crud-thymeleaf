@@ -1,6 +1,8 @@
 # Product Manager (Spring Boot + Thymeleaf)
 
-Simple CRUD web app built with Spring Boot, Thymeleaf, Spring Data JPA, and MySQL. It manages a list of products with create, edit, and delete flows.
+Simple CRUD web app built with Spring Boot, Thymeleaf, Spring Data JPA, and PostgreSQL. It manages a list of products with create, edit, and delete flows.
+
+![UI showcase](src/main/resources/assets/showcase_1.png)
 
 ## Features
 - List all products on the home page
@@ -13,7 +15,7 @@ Simple CRUD web app built with Spring Boot, Thymeleaf, Spring Data JPA, and MySQ
 - Spring Boot 2.3.1
 - Spring MVC + Thymeleaf
 - Spring Data JPA (Hibernate)
-- MySQL
+- PostgreSQL
 - Maven
 
 ## Project structure
@@ -27,31 +29,21 @@ Simple CRUD web app built with Spring Boot, Thymeleaf, Spring Data JPA, and MySQ
 ## Prerequisites
 - Java 8 (or compatible)
 - Maven
-- MySQL running locally
+- PostgreSQL running locally
 
 ## Database setup
-The app expects a MySQL database named `salesdb` and uses explicit schema (no auto DDL).
+The app expects a PostgreSQL database named `salesdb` and uses explicit schema (no auto DDL).
 
-Update connection settings in `src/main/resources/application.properties`:
+Default connection settings in `src/main/resources/application.properties`:
 ```
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/salesdb?autoReconnect=true&serverTimezone=UTC&useSSL=false
-spring.datasource.username=noot
-spring.datasource.password=noot
+spring.datasource.url=jdbc:postgresql://localhost:5432/salesdb
+spring.datasource.username=appuser
+spring.datasource.password=appsecret
 ```
 
-Create the table:
-```sql
-CREATE DATABASE IF NOT EXISTS salesdb;
-USE salesdb;
-
-CREATE TABLE IF NOT EXISTS product (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255),
-  brand VARCHAR(255),
-  madein VARCHAR(255),
-  price FLOAT,
-  PRIMARY KEY (id)
-);
+Create the database, role, and table by running:
+```
+psql -U postgres -h localhost -f db/init_postgres.sql
 ```
 
 ## Run the app

@@ -2,38 +2,153 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create New Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        :root {
+            --ink: #101720;
+            --muted: #5b6673;
+            --surface: #ffffff;
+            --accent: #2f6bff;
+            --accent-2: #ff7a59;
+            --line: #e6e9ee;
+            --shadow: 0 20px 60px rgba(16, 23, 32, 0.12);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Tahoma", sans-serif;
+            background: radial-gradient(1200px 600px at 20% 10%, #ffe8d9 0%, transparent 55%),
+                        radial-gradient(900px 500px at 90% 0%, #d9f0ff 0%, transparent 60%),
+                        #f6f7fb;
+            min-height: 100vh;
+        }
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 20px 80px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .title {
+            margin: 0;
+            font-size: clamp(26px, 3vw, 36px);
+        }
+        .subtitle {
+            margin: 6px 0 0;
+            color: var(--muted);
+        }
+        .card {
+            background: var(--surface);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+            animation: fadeUp 0.6s ease both;
+        }
+        .field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        label {
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            font-size: 15px;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .primary {
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent), #2446d1);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(47, 107, 255, 0.35);
+        }
+        .ghost {
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-<div align="center">
-    <h1>Create New Product</h1>
-    <br/>
-<!--object name should match the name specified in the method that redirects here-->
-    <form action="#" th:action="@{/save}" th:object="${product}" method="post">
-        <table border="0" cellpadding="10">
-            <tr>
-                <td>Product Name:</td>
-                <td><input type="text" th:field="*{name}"/></td>
-            </tr>
+<div class="page">
+    <header class="header">
+        <div>
+            <h1 class="title">Create a new product</h1>
+            <p class="subtitle">Fill the details below to add a fresh item to your catalog.</p>
+        </div>
+        <a class="ghost" href="/">Back to list</a>
+    </header>
 
-            <tr>
-                <td>Brand:</td>
-                <td><input type="text" th:field="*{brand}"/></td>
-            </tr>
+    <section class="card">
+        <!-- object name should match the name specified in the method that redirects here -->
+        <form action="#" th:action="@{/save}" th:object="${product}" method="post">
+            <div class="field">
+                <label for="name">Product name</label>
+                <input id="name" type="text" th:field="*{name}" placeholder="Wireless headphones"/>
+            </div>
 
-            <tr>
-                <td>Made in</td>
-                <td><input type="text" th:field="*{madein}"/></td>
-            </tr>
+            <div class="field">
+                <label for="brand">Brand</label>
+                <input id="brand" type="text" th:field="*{brand}" placeholder="Acme Audio"/>
+            </div>
 
-            <tr>
-                <td>PPrice:</td>
-                <td><input type="text" th:field="*{price}"/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit">Save</button></td>
-            </tr>
-        </table>
-    </form>
+            <div class="field">
+                <label for="madein">Made in</label>
+                <input id="madein" type="text" th:field="*{madein}" placeholder="Italy"/>
+            </div>
+
+            <div class="field">
+                <label for="price">Price</label>
+                <input id="price" type="text" th:field="*{price}" placeholder="199.99"/>
+            </div>
+
+            <div class="actions">
+                <button class="primary" type="submit">Save product</button>
+                <a class="ghost" href="/">Cancel</a>
+            </div>
+        </form>
+    </section>
 </div>
 </body>
 </html>
